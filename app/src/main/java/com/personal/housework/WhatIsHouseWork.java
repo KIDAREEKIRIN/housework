@@ -46,7 +46,9 @@ public class WhatIsHouseWork extends AppCompatActivity {
 
     private void filter(String newText) {
         List<HouseWork> filteredList = new ArrayList<>();
+        // 향상된(?) for문 -> (변수타입 변수이름 : 배열이름)
         for (HouseWork item : myHouseWorkList) {
+            // 반복할 코드 , Array or ArrayList OK, 수정 불가.
             if(item.getName().toLowerCase().contains(newText.toLowerCase())){
                 filteredList.add(item);
             }
@@ -60,6 +62,7 @@ public class WhatIsHouseWork extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
+        // 새로운 ArrayList 생성
         myHouseWorkList = new ArrayList<>();
 
         myHouseWorkList.add(new HouseWork("세탁하기"));
