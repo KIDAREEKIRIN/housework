@@ -16,7 +16,7 @@
     </androidx.appcompat.widget.SearchView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_main"
+        android:id="@+id/rv_cloth"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

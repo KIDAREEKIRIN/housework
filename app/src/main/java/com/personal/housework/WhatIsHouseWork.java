@@ -1,20 +1,44 @@
 package com.personal.housework;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.personal.housework.DTO.HouseWork;
+import com.personal.housework.Retrofit.GetDataService;
+import com.personal.housework.Retrofit.RetrofitClientInstance;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WhatIsHouseWork extends AppCompatActivity {
 
+    // 기존 22.08.23.(화) -> 변경 예정.
     RecyclerView recyclerView;
     List<HouseWork> myHouseWorkList;
-    CustomAdapter customAdapter;
+    // Retrofit2 관련.
+//    GetDataService service;
+//    Call<List<com.personal.housework.DTO.HouseWork>> call;
+    CustomAdapter adapter;
+
+    // 진행중 바
+    ProgressDialog progressDialog;
 
     // 검색기능 구현하기./
     SearchView searchView;
@@ -26,10 +50,35 @@ public class WhatIsHouseWork extends AppCompatActivity {
 
         searchView = findViewById(R.id.search_view);
 
+        // 진행중바
+        progressDialog = new ProgressDialog(WhatIsHouseWork.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
 
-        displayItems();
+        myHouseWorkList = new ArrayList<>();
 
+        // 레트로핏 인스턴스 생성을 해줍니다.
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<HouseWork>> call = service.getAllCloth();
 
+        // enqueue로 비동기 통신을 싱행합니다.
+        call.enqueue(new Callback<List<HouseWork>>() {
+            @Override
+            public void onResponse(Call<List<HouseWork>> call, Response<List<HouseWork>> response) {
+                myHouseWorkList = response.body();
+                progressDialog.dismiss(); // 진행중 바 사라짐.
+                generateDataList(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<HouseWork>> call, Throwable t) {
+                progressDialog.dismiss();// 진행중 바 사라짐.
+                Toast.makeText(getApplicationContext(), "쏘리쏘리 다음에 다시 시도해주세요." +t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // 검색 기능 SearchView
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -42,38 +91,38 @@ public class WhatIsHouseWork extends AppCompatActivity {
                 return true;
             }
         });
+//                Log.d(TAG, "onResponse: 에러코드" + );
+
     }
 
+    private void generateDataList(List<HouseWork> myHouseWorkList) {
+        recyclerView = findViewById(R.id.rv_cloth);
+        adapter = new CustomAdapter(this, myHouseWorkList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(WhatIsHouseWork.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private void filter(String newText) {
         List<HouseWork> filteredList = new ArrayList<>();
-        // 향상된(?) for문 -> (변수타입 변수이름 : 배열이름)
-        for (HouseWork item : myHouseWorkList) {
-            // 반복할 코드 , Array or ArrayList OK, 수정 불가.
-            if(item.getName().toLowerCase().contains(newText.toLowerCase())){
+//        myHouseWorkList = new ArrayList<>();
+        for ( HouseWork item : myHouseWorkList) {
+            if ( item.getCloth_name().toLowerCase().contains(newText.toLowerCase())) {
                 filteredList.add(item);
             }
         }
-        customAdapter.filterList(filteredList);
+        adapter.filterList(filteredList);
+        adapter.notifyDataSetChanged(); //
     }
-
-    private void displayItems() {
-
-        recyclerView = findViewById(R.id.recycler_main);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
-
-        // 새로운 ArrayList 생성
-        myHouseWorkList = new ArrayList<>();
-
-        myHouseWorkList.add(new HouseWork("세탁하기"));
-        myHouseWorkList.add(new HouseWork("빨래 널기"));
-        myHouseWorkList.add(new HouseWork("빨래 개기"));
-        myHouseWorkList.add(new HouseWork("옷장 정리하기"));
-        myHouseWorkList.add(new HouseWork("옷 수선하기"));
-        myHouseWorkList.add(new HouseWork("다림질하기"));
-
-        customAdapter = new CustomAdapter(this, myHouseWorkList);
-        recyclerView.setAdapter(customAdapter);
-
-    }
+//        List<HouseWork> filteredList = new ArrayList<>();
+//        // 향상된(?) for문 -> (변수타입 변수이름 : 배열이름)
+//        for (HouseWork item : myHouseWorkList) {
+//            // 반복할 코드 , Array or ArrayList OK, 수정 불가.
+//            if(item.getName().toLowerCase().contains(newText.toLowerCase())){
+//                filteredList.add(item);
+//            }
+//        }
 }

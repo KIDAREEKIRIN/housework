@@ -6,17 +6,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class HouseWork {
-    @Expose
+
     @SerializedName("cloth_id") private Integer cloth_id;
-    @Expose
     @SerializedName("cloth_name") private String cloth_name;
-    @Expose
     @SerializedName("cloth_photo_path") private String cloth_photo_path;
-    @Expose
     @SerializedName("cloth_desc") private String cloth_desc;
-    @Expose
     @SerializedName("user_id") private Integer user_id;
-    @Expose
     @SerializedName("category_id") private Integer category_id;
 
     public HouseWork(Integer cloth_id, String cloth_name, String cloth_photo_path, String cloth_desc, Integer user_id, Integer category_id) {
