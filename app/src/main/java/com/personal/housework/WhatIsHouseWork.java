@@ -50,7 +50,7 @@ public class WhatIsHouseWork extends AppCompatActivity {
 
         searchView = findViewById(R.id.search_view);
 
-        // 진행중바
+        // 진행중 ProgressBar -> 너무 빨리 꺼짐 ( 데이터 숫자가 부족한 듯 )
         progressDialog = new ProgressDialog(WhatIsHouseWork.this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
