@@ -10,11 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.personal.housework.DTO.HouseWork;
 import com.personal.housework.Retrofit.GetDataService;
 import com.personal.housework.Retrofit.RetrofitClientInstance;
@@ -32,9 +35,8 @@ public class WhatIsHouseWork extends AppCompatActivity {
     // 기존 22.08.23.(화) -> 변경 예정.
     RecyclerView recyclerView;
     List<HouseWork> myHouseWorkList;
-    // Retrofit2 관련.
-//    GetDataService service;
-//    Call<List<com.personal.housework.DTO.HouseWork>> call;
+
+    // Adapter
     CustomAdapter adapter;
 
     // 진행중 바
@@ -42,6 +44,9 @@ public class WhatIsHouseWork extends AppCompatActivity {
 
     // 검색기능 구현하기./
     SearchView searchView;
+
+    // 확장된 플로팅 액션 버튼
+    ExtendedFloatingActionButton extended_fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,10 @@ public class WhatIsHouseWork extends AppCompatActivity {
         progressDialog.setMessage("Loading....");
         progressDialog.show();
 
+        // 플로팅 액션 버튼
+        extended_fab = findViewById(R.id.extended_fab);
+        extend_fab(); // 추가하기 함수.
+
         myHouseWorkList = new ArrayList<>();
 
         // 레트로핏 인스턴스 생성을 해줍니다.
@@ -65,7 +74,7 @@ public class WhatIsHouseWork extends AppCompatActivity {
         call.enqueue(new Callback<List<HouseWork>>() {
             @Override
             public void onResponse(Call<List<HouseWork>> call, Response<List<HouseWork>> response) {
-                myHouseWorkList = response.body();
+                myHouseWorkList = response.body(); // 추가 해줘야 Retrofit 에서 받아온 데이터를 읽을 수 있음.
                 progressDialog.dismiss(); // 진행중 바 사라짐.
                 generateDataList(response.body());
 
@@ -95,6 +104,17 @@ public class WhatIsHouseWork extends AppCompatActivity {
 
     }
 
+    // FAB 추가하기 클릭 시,
+    private void extend_fab() {
+        extended_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "추가하기 클릭!", Toast.LENGTH_SHORT).show();
+//                Intent detail = new Intent()
+            }
+        });
+    }
+
     private void generateDataList(List<HouseWork> myHouseWorkList) {
         recyclerView = findViewById(R.id.rv_cloth);
         adapter = new CustomAdapter(this, myHouseWorkList);
@@ -114,8 +134,8 @@ public class WhatIsHouseWork extends AppCompatActivity {
                 filteredList.add(item);
             }
         }
-        adapter.filterList(filteredList);
-        adapter.notifyDataSetChanged(); //
+        adapter.filterList(filteredList); // filterList 내용 Adapter 에 반영하기.
+        adapter.notifyDataSetChanged(); // List 데이터 갱신하기
     }
 //        List<HouseWork> filteredList = new ArrayList<>();
 //        // 향상된(?) for문 -> (변수타입 변수이름 : 배열이름)
