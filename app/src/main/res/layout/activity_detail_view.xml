@@ -7,10 +7,63 @@
     android:orientation="vertical"
     tools:context=".Detail.DetailView">
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:text="이름"/>
+        app:cardElevation="8dp"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="8dp"
+        >
+
+        <EditText
+            android:id="@+id/et_clothName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_margin="4dp"
+            android:hint="가정일 이름"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/iv_clothPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/janitor"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="8dp">
+
+        <EditText
+            android:id="@+id/et_clothDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:hint="가정일 설명하는 부분"
+            android:textSize="22sp"
+            android:layout_margin="4dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
 
 </LinearLayout>

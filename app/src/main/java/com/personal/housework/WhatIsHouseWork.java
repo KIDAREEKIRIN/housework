@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.personal.housework.DTO.HouseWork;
+import com.personal.housework.Detail.DetailView;
 import com.personal.housework.Retrofit.GetDataService;
 import com.personal.housework.Retrofit.RetrofitClientInstance;
 
@@ -66,6 +67,7 @@ public class WhatIsHouseWork extends AppCompatActivity {
 
         myHouseWorkList = new ArrayList<>();
 
+        // Retrofit 통신으로 서버에서 데이터베이스에 저장된 데이터 불러오기.
         // 레트로핏 인스턴스 생성을 해줍니다.
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<List<HouseWork>> call = service.getAllCloth();
@@ -100,8 +102,6 @@ public class WhatIsHouseWork extends AppCompatActivity {
                 return true;
             }
         });
-//                Log.d(TAG, "onResponse: 에러코드" + );
-
     }
 
     // FAB 추가하기 클릭 시,
@@ -109,8 +109,11 @@ public class WhatIsHouseWork extends AppCompatActivity {
         extended_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Toast 메세지.
                 Toast.makeText(getApplicationContext(), "추가하기 클릭!", Toast.LENGTH_SHORT).show();
-//                Intent detail = new Intent()
+                // Intent 로 상세페이지 열기.
+                Intent detail = new Intent(getApplicationContext(), DetailView.class);
+                startActivity(detail);
             }
         });
     }
@@ -121,14 +124,12 @@ public class WhatIsHouseWork extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(WhatIsHouseWork.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
 
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private void filter(String newText) {
         List<HouseWork> filteredList = new ArrayList<>();
-//        myHouseWorkList = new ArrayList<>();
         for ( HouseWork item : myHouseWorkList) {
             if ( item.getCloth_name().toLowerCase().contains(newText.toLowerCase())) {
                 filteredList.add(item);
@@ -137,12 +138,5 @@ public class WhatIsHouseWork extends AppCompatActivity {
         adapter.filterList(filteredList); // filterList 내용 Adapter 에 반영하기.
         adapter.notifyDataSetChanged(); // List 데이터 갱신하기
     }
-//        List<HouseWork> filteredList = new ArrayList<>();
-//        // 향상된(?) for문 -> (변수타입 변수이름 : 배열이름)
-//        for (HouseWork item : myHouseWorkList) {
-//            // 반복할 코드 , Array or ArrayList OK, 수정 불가.
-//            if(item.getName().toLowerCase().contains(newText.toLowerCase())){
-//                filteredList.add(item);
-//            }
-//        }
+
 }

@@ -20,9 +20,7 @@ public class Dashboard extends AppCompatActivity {
         cv_houseWork2 = findViewById(R.id.cv_houseWork2);
         cv_houseWork3 = findViewById(R.id.cv_houseWork3);
 
-        clickHouseWork1();
-
-
+        clickHouseWork1(); // 가정일 알아보기.
 
     }
 
@@ -30,6 +28,7 @@ public class Dashboard extends AppCompatActivity {
         cv_houseWork1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 가정일 알아보기 클릭 시,
                 Intent house1 = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(house1);
             }

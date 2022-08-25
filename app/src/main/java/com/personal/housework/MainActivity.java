@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         // 의생활 클릭 시,
         select_clothWork();
 
-
-
     }
     // 의생활 클릭 시,
     private void select_clothWork() {
