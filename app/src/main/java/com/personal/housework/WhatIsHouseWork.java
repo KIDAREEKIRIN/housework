@@ -110,7 +110,7 @@ public class WhatIsHouseWork extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Toast 메세지.
-                Toast.makeText(getApplicationContext(), "추가하기 클릭!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "추가하기 클릭!", Toast.LENGTH_SHORT).show();
                 // Intent 로 상세페이지 열기.
                 Intent detail = new Intent(getApplicationContext(), DetailView.class);
                 startActivity(detail);

@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:layout_margin="4dp"
+            android:inputType="textNoSuggestions"
             android:hint="가정일 이름"/>
 
     </androidx.cardview.widget.CardView>
@@ -52,18 +53,13 @@
             android:id="@+id/et_clothDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textNoSuggestions"
             android:hint="가정일 설명하는 부분"
             android:textSize="22sp"
-            android:layout_margin="4dp"/>
+            android:layout_margin="4dp"
+
+            />
 
     </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
 
 </LinearLayout>

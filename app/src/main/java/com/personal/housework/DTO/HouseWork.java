@@ -14,6 +14,13 @@ public class HouseWork {
     @SerializedName("user_id") private Integer user_id;
     @SerializedName("category_id") private Integer category_id;
 
+    @Expose
+    @SerializedName("success")
+    private Boolean success;
+    @Expose
+    @SerializedName("message")
+    private String message;
+
     public HouseWork(Integer cloth_id, String cloth_name, String cloth_photo_path, String cloth_desc, Integer user_id, Integer category_id) {
         this.cloth_id = cloth_id;
         this.cloth_name = cloth_name;
@@ -69,5 +76,21 @@ public class HouseWork {
 
     public void setCategory_id(Integer category_id) {
         this.category_id = category_id;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
