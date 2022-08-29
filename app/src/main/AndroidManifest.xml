@@ -3,6 +3,9 @@
     package="com.personal.housework">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,12 +17,13 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".Detail.DetailView"
-            android:parentActivityName=".WhatIsHouseWork"
-            android:exported="false" />
+            android:exported="false"
+            android:finishOnTaskLaunch="true"
+            android:parentActivityName=".WhatIsHouseWork" />
         <activity
             android:name=".WhatIsHouseWork"
-            android:parentActivityName=".MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Splash_Screen"
             android:exported="true">
@@ -29,12 +33,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.personal.housework"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".Dashboard"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".CheckList.checkList"
+            android:exported="true"/>
+        <activity
+            android:name=".CheckList.Editor"
+            android:exported="true"/>
     </application>
 
 </manifest>

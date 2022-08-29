@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:text="가정일"
             android:textColor="@color/black"
-            android:textSize="28sp">
+            android:textSize="36sp">
 
         </TextView>
 

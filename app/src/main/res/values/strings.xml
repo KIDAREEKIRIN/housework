@@ -2,4 +2,17 @@
     <string name="app_name">가정일 A To Z</string>
     <string name="logo_name">Get A Way</string>
     <string name="slogan_name">We will help you to find your way!</string>
+    <string name="to_do">가족구성원</string>
+    <string name="enter_note">해야할 가정일</string>
+    <string name="save">저장</string>
+    <string name="date">19 Octorber 2021</string>
+    <string name="edit">edit</string>
+    <string name="delete">삭제</string>
+    <string name="update">Update</string>
+
+    <!--    <string-array name="LAN">-->
+    <!--        <item>"카메라"</item>-->
+    <!--        <item>"갤러리"</item>-->
+    <!--        <item>"돌아가기"</item>-->
+    <!--    </string-array>-->
 </resources>

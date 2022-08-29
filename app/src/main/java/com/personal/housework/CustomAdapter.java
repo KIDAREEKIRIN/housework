@@ -3,20 +3,19 @@ package com.personal.housework;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.personal.housework.DTO.HouseWork;
+import com.personal.housework.Detail.DetailView;
 
 import java.util.List;
 
@@ -24,7 +23,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     Context context;
     List<HouseWork> dataList;
-    OnItemClickListener onItemClick;
+    ItemClickListener mListener = null;
+
+    // ItemClcikListener 리스너 객체 참조를 어댑터에 전달하는 메서드.
+    public void setOnItemClickListener(ItemClickListener listener) {
+        this.mListener = listener;
+    }
 
 
     public CustomAdapter(Context context, List<HouseWork> dataList) {
@@ -32,8 +36,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         this.dataList = dataList;
     }
 
-
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    // RecyclerView ViewHolder
+    public class CustomViewHolder extends RecyclerView.ViewHolder{
 
         TextView textName;
         CardView cv_clothWorkName;
@@ -43,8 +47,23 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             textName = itemView.findViewById(R.id.tv_textName);
             cv_clothWorkName = itemView.findViewById(R.id.cv_clothWorkName);
 
-        }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        // 리스너 객체의 메서드 호출.
+                        // 해당 클릭 포지션의 clothName + clothDesc 담아서 보내기.
+                        Intent intent = new Intent(context, DetailView.class);
+                        intent.putExtra("cateId", dataList.get(pos).getCate_id());
+                        intent.putExtra("houseName", dataList.get(pos).getHouse_name());
+                        intent.putExtra("houseDesc", dataList.get(pos).getHouse_desc());
+                        context.startActivity(intent);
+                    }
+                }
+            });
 
+        }
 
     }
 
@@ -59,49 +78,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         // 타이틀
-        holder.textName.setText(dataList.get(position).getCloth_name()); // 해당 포지션에 cloth_name 값 불러오기
-        Log.e(TAG, "onBindViewHolder: " + dataList.get(position).getCloth_name());
-//        // 이미지 -> 현재 해당 이미지가 없음.
-//        Glide.with(context)
-//                .load(R.drawable.cloth)
-//                .skipMemoryCache(true)
-//                .circleCrop()
-//                .skipMemoryCache(true)
-//                .error(R.drawable.cloth)
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .into(holder.);
-        holder.cv_clothWorkName.setTag(dataList.get(position).getCloth_id());
+        holder.textName.setText(dataList.get(position).getHouse_name()); // 해당 포지션에 cloth_name 값 불러오기
+        holder.cv_clothWorkName.setTag(dataList.get(position).getHouse_id());
     }
 
+    // RecyclerView 사이즈.(길이)
     @Override
     public int getItemCount() {
         return dataList.size();
     }
 
-
-    //
-//    @NonNull
-//    @Override
-//    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        return new CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.single_items, parent, false));
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-//        holder.textName.setText(list.get(position).getName());
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return list.size();
-//    }
-//
+    // 검색기능 Search Filter
     public void filterList(List<HouseWork> filteredList){
         dataList = filteredList;
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        onItemClick = onItemClickListener;
-    }
 }

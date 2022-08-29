@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Detail.DetailView">
+    tools:context=".Detail.DetailView_afterPhoto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -15,30 +15,13 @@
         android:layout_margin="8dp"
         >
 
-        <TextView
-            android:id="@+id/tv_cateName"
+        <EditText
+            android:id="@+id/et_clothName_after"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
+            android:textSize="22sp"
             android:layout_margin="4dp"
-            android:hint="Category"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="8dp"
-        android:layout_margin="8dp"
-        >
-
-        <TextView
-            android:id="@+id/tv_houseName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="32sp"
-            android:layout_margin="4dp"
+            android:inputType="textNoSuggestions"
             android:hint="가정일 이름"/>
 
     </androidx.cardview.widget.CardView>
@@ -51,7 +34,7 @@
         android:layout_margin="8dp">
 
         <ImageView
-            android:id="@+id/iv_clothPhoto"
+            android:id="@+id/iv_clothPhoto_after"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_margin="4dp"
@@ -67,13 +50,15 @@
         app:cardCornerRadius="8dp"
         android:layout_margin="8dp">
 
-        <TextView
-            android:id="@+id/tv_houseDesc"
+        <EditText
+            android:id="@+id/et_clothDesc_after"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="가정일 설명"
-            android:textSize="32sp"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:hint="가정일 설명하는 부분"
+            android:textSize="22sp"
             android:layout_margin="4dp"
+
             />
 
     </androidx.cardview.widget.CardView>
